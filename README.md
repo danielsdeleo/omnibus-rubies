@@ -1,7 +1,10 @@
-# rubies Omnibus project
+# omnibus-rubies
 
-This project creates full-stack platform-specific packages for
-`rubies`!
+This project creates full-stack platform-specific packages for a matrix
+of Ruby and Rubygems versions. These are for use in our Ci setup so we
+can quickly build disposable build slaves or bundle and repackage apps
+for fast full-stack application builds.
+
 
 ## Installation
 
@@ -19,7 +22,7 @@ $ bundle install --binstubs
 You create a platform-specific package using the `build project` command:
 
 ```shell
-$ bin/omnibus build project rubies
+$ bin/omnibus build project ruby-193-gems-20
 ```
 
 The platform/architecture type of the package created will match the platform
