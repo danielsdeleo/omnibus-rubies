@@ -18,7 +18,8 @@
 name "rubygems-18"
 version "1.8.24"
 
-dependency "ruby"
+# Do not specify dependency on ruby, since we don't know what ruby version
+# we're getting installed under
 
 source :url => "http://production.cf.rubygems.org/rubygems/rubygems-#{version}.tgz",
        :md5 => "3a555b9d579f6a1a1e110628f5110c6b"
@@ -26,5 +27,5 @@ source :url => "http://production.cf.rubygems.org/rubygems/rubygems-#{version}.t
 relative_path "rubygems-#{version}"
 
 build do
-  ruby "setup.rb"
+  ruby "setup.rb --no-rdoc --no-ri"
 end

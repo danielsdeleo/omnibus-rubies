@@ -18,7 +18,8 @@
 name "rubygems-20"
 version "2.0.3"
 
-dependency "ruby"
+# Do not specify dependency on ruby, since we don't know what ruby version
+# we're getting installed under
 
 source :url => "http://production.cf.rubygems.org/rubygems/rubygems-#{version}.tgz",
        :md5 => "854691f145cea98b4100e5b0831b73ed"
@@ -26,5 +27,9 @@ source :url => "http://production.cf.rubygems.org/rubygems/rubygems-#{version}.t
 relative_path "rubygems-#{version}"
 
 build do
-  ruby "setup.rb"
+  # Set LC_ALL to UTF-8 so that Ruby 1.9 will have a default_external encoding
+  # of UTF-8. This is required to workaround a bug in rubygems 2.0.3. See this
+  # commit fixing the issue (but unreleased of this writing):
+  # https://github.com/rubygems/rubygems/commit/9fb90c0ed091346e148c925df2d15713ab51fda1
+  ruby "setup.rb --no-rdoc --no-ri --backtrace --debug", :env => {"LC_ALL" => "en_US.UTF-8"}
 end
