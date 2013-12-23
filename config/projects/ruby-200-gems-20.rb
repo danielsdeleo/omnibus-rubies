@@ -1,7 +1,7 @@
 
 name "ruby-200-gems-20"
-maintainer "Opscode"
-homepage "opscode.com"
+maintainer "Chef"
+homepage "getchef.com"
 
 replaces        "ruby-200-gems-20"
 install_path    "/opt/ruby-200-gems-20"
