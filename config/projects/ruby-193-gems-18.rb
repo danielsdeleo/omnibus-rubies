@@ -1,7 +1,7 @@
 
 name "ruby-193-gems-18"
-maintainer "Opscode"
-homepage "opscode.com"
+maintainer "Chef"
+homepage "getchef.com"
 
 replaces        "ruby-193-gems-18"
 install_path    "/opt/ruby-193-gems-18"

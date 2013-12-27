@@ -1,5 +1,6 @@
 #
-# Copyright:: Copyright (c) 2012 Opscode, Inc.
+# Copyright:: Copyright (c) 2012-2013 Chef Software, Inc.
+#
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +17,7 @@
 #
 
 name "ruby-193"
-version "1.9.3-p286"
+version "1.9.3-p484"
 
 dependency "zlib"
 dependency "ncurses"
@@ -28,7 +29,7 @@ dependency "gdbm" if (platform == "mac_os_x" or platform == "freebsd")
 dependency "libgcc" if (platform == "solaris2")
 
 source :url => "http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-#{version}.tar.gz",
-       :md5 => 'e2469b55c2a3d0d643097d47fe4984bb'
+       :md5 => '8ac0dee72fe12d75c8b2d0ef5d0c2968'
 
 relative_path "ruby-#{version}"
 

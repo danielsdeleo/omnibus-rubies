@@ -1,5 +1,5 @@
 #
-# Copyright:: Copyright (c) 2012 Opscode, Inc.
+# Copyright:: Copyright (c) 2012-2013 Chef Software, Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,19 +15,20 @@
 # limitations under the License.
 #
 
-name "ruby-187"
-version "1.8.7-p371"
+name "ruby-210"
+version "2.1.0"
 
 dependency "zlib"
 dependency "ncurses"
 dependency "libedit"
 dependency "openssl"
+dependency "libyaml"
 dependency "libiconv"
 dependency "gdbm" if (platform == "mac_os_x" or platform == "freebsd")
 dependency "libgcc" if (platform == "solaris2")
 
-source :url => "http://ftp.ruby-lang.org/pub/ruby/1.8/ruby-#{version}.tar.gz",
-       :md5 => '653f07bb45f03d0bf3910491288764df'
+source :url => "http://ftp.ruby-lang.org/pub/ruby/2.1/ruby-#{version}.tar.gz",
+       :md5 => '9e6386d53f5200a3e7069107405b93f7'
 
 relative_path "ruby-#{version}"
 
@@ -39,11 +40,20 @@ env =
       "LDFLAGS" => "-arch x86_64 -R#{install_dir}/embedded/lib -L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include -I#{install_dir}/embedded/include/ncurses"
     }
   when "solaris2"
+    if Omnibus.config.solaris_compiler == "studio"
+    {
+      "CFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include",
+      "LDFLAGS" => "-R#{install_dir}/embedded/lib -L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include"
+    }
+    elsif Omnibus.config.solaris_compiler == "gcc"
     {
       "CFLAGS" => "-L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include -O3 -g -pipe",
       "LDFLAGS" => "-R#{install_dir}/embedded/lib -L#{install_dir}/embedded/lib -I#{install_dir}/embedded/include -static-libgcc",
       "LD_OPTIONS" => "-R#{install_dir}/embedded/lib"
     }
+    else
+      raise "Sorry, #{Omnibus.config.solaris_compiler} is not a valid compiler selection."
+    end
   else
     {
       "CFLAGS" => "-I#{install_dir}/embedded/include -O3 -g -pipe",
@@ -63,6 +73,27 @@ build do
 
   if platform == "freebsd"
     configure_command << "--without-execinfo"
+  elsif platform == "smartos"
+    ##
+    # Patches against Ruby 1.9.3 may not work correctly.
+    #
+    # We should try building without the patches; if they're still necessary,
+    # see upstreams for updated versions.
+    ##
+    #
+    ## # Opscode patch - someara@opscode.com
+    ## # GCC 4.7.0 chokes on mismatched function types between OpenSSL 1.0.1c and Ruby 1.9.3-p286
+    ## patch :source => "ruby-openssl-1.0.1c.patch", :plevel => 1
+
+    ## # Patches taken from RVM.
+    ## # http://bugs.ruby-lang.org/issues/5384
+    ## # https://www.illumos.org/issues/1587
+    ## # https://github.com/wayneeseguin/rvm/issues/719
+    ## patch :source => "rvm-cflags.patch", :plevel => 1
+
+    ## # From RVM forum
+    ## # https://github.com/wayneeseguin/rvm/commit/86766534fcc26f4582f23842a4d3789707ce6b96
+    ## configure_command << "ac_cv_func_dl_iterate_phdr=no"
   end
 
   command configure_command.join(" "), :env => env

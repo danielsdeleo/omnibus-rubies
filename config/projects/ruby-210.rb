@@ -1,18 +1,18 @@
 
-name "ruby-187-gems-18"
-maintainer "Opscode"
-homepage "opscode.com"
+name "ruby-210"
+maintainer "Chef"
+homepage "getchef.com"
 
-replaces        "ruby-187-gems-18"
-install_path    "/opt/ruby-187-gems-18"
+replaces        "ruby-210"
+install_path    "/opt/ruby-210"
 build_version   Omnibus::BuildVersion.new.semver
 build_iteration 1
 
 # creates required build directories
 dependency "preparation"
 
-dependency "ruby-187"
-dependency "rubygems-18"
+dependency "ruby-210"
+# ruby 2.0 comes with rubygems 2.2
 
 # version manifest file
 dependency "version-manifest"

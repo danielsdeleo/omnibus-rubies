@@ -1,5 +1,5 @@
 #
-# Copyright:: Copyright (c) 2012 Opscode, Inc.
+# Copyright:: Copyright (c) 2012-2013 Chef Software, Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
 #
 
 name "ruby-200"
-version "2.0.0-p0"
+version "2.0.0-p353"
 
 dependency "zlib"
 dependency "ncurses"
@@ -28,7 +28,7 @@ dependency "gdbm" if (platform == "mac_os_x" or platform == "freebsd")
 dependency "libgcc" if (platform == "solaris2")
 
 source :url => "http://ftp.ruby-lang.org/pub/ruby/2.0/ruby-#{version}.tar.gz",
-       :md5 => '50d307c4dc9297ae59952527be4e755d'
+       :md5 => '78282433fb697dd3613613ff55d734c1'
 
 relative_path "ruby-#{version}"
 
